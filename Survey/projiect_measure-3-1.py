@@ -660,6 +660,8 @@ class Jikeng_original_cj(QDialog):
         self.editline1 = QLineEdit(self)
         self.label2 = QLabel('总期数', self)
         self.editline2 = QLineEdit(self)
+        self.label3=QLabel('输入期次起始点',self)
+        self.editline3=QLineEdit(self)
         self.button1 = QPushButton(self)
         self.button1.setText('开始生成原始数据')
         self.V_layout1 = QVBoxLayout()
@@ -672,8 +674,10 @@ class Jikeng_original_cj(QDialog):
     def Layout__init(self):
         self.V_layout1.addWidget(self.label1)
         self.V_layout1.addWidget(self.label2)
+        self.V_layout1.addWidget(self.label3)
         self.V_layout2.addWidget(self.editline1)
         self.V_layout2.addWidget(self.editline2)
+        self.V_layout2.addWidget(self.editline3)
         self.H_layout1.addLayout(self.V_layout1)
         self.H_layout1.addLayout(self.V_layout2)
         self.V_layout3.addLayout(self.H_layout1)
@@ -693,7 +697,7 @@ class Jikeng_original_cj(QDialog):
         dsheet1 = dpath.get_sheet_by_name('日报')
         sheetname_from_dateset = []
         for name in dpath.sheetnames:
-            if ('坡顶沉降' in name):
+            if ('周边地表' in name): ######################################坡顶沉降、周边管线、@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                 sheetname_from_dateset.append(name)
                 print('沉降数据库有：%s', name)
             else:
@@ -1362,7 +1366,8 @@ class Jikeng_original_cj(QDialog):
         print(qi_shu)
         print(BC_range_min, BC_range_max)
         RZ_names, RZ_values = self.read_measure_line_from_dataset(dateset_path, measure_line_path)
-        for m in range(int(qi_shu)):  # len(RZ_values)
+        start11 = int(self.editline3.text())
+        for m in range(start11-1,int(qi_shu)):  # len(RZ_values)
             #BC1 = round(random.uniform(float(BC_range_min), float(BC_range_max)), 5)
             flaggg=random.randint(1,9)
             if(flaggg%2==1):
@@ -1416,7 +1421,7 @@ class Jikeng_original_cj(QDialog):
                         index3 = re.findall(r'(.*)期', pat_name[i])[0]
                         INDEX3.append(index3)
                         book2 = load_workbook(dateset_path)
-                        sheet2 = book2.get_sheet_by_name('坡顶沉降成果表')
+                        sheet2 = book2.get_sheet_by_name('周边地表沉降成果表') ############周边道路、周边管线、周边建筑、坡顶沉降成果表 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                         nrows2 = sheet2.max_row
                         for z3 in range(13, nrows2 + 1):
                             if (int(index3) == sheet2.cell(z3, 1).value):
@@ -1452,7 +1457,7 @@ class Jikeng_original_cj(QDialog):
                         path = path1 + pat_name[z1]
                         data1 = pd.read_excel(path, '原始数据-支点')
                         # fid1 = open(path1 + '沉降观测数据第' + INDEX3[num_1 - 1] + '期' + '.txt', 'w')
-                        fid1 = open(path1 + '坡顶沉降' + INDEX3[num_1 - 1] + '.dat', 'w')
+                        fid1 = open(path1 + '周边地表沉降' + INDEX3[num_1 - 1] + '.dat', 'w')  ##坡顶沉降、周边地表 ###########@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                         date3 = str(DATE[num_1 - 1])
                         x1 = date3.replace('-', '年', 1)
                         x2 = x1.replace('-', '月', 1)
@@ -1466,8 +1471,7 @@ class Jikeng_original_cj(QDialog):
                             day1 = '0' + day1
                         date4 = year1 + month1 + day1
                         fid1.write('期次：' + INDEX3[num_1 - 1] + ' ' + '日期：' + x3 + '\n')
-                        fid1.w
-                # path="D:\\Desktop\\测试期次1\\测试output\\10期原始数据1.xlsx"rite(
+                        fid1.write(
                             'For M5|Adr' + '   ' + '  1' + '|' + 'TO' + '  ' + date4 + '.dat' + '               ' + "|" + "                      " + "|" + "                      " + "|" + "                      " + "|" + "\n")
                         fid1.write(
                             'For M5|Adr' + '   ' + '  2' + '|' + 'TO' + '  ' + 'Start-Line' + '      ' + 'aBFFB' + '     ' + '1' + '|' + "                      " + "|" + "                      " + "|" + "                      " + "|" + "\n")
@@ -2913,7 +2917,7 @@ class Jikeng_make_dir(QDialog):
                 row2 = sheet1.max_row  # 根据日报获取期数
         file_names = os.listdir(path3)
         a = '周边道路'  # a='周边道路' #####前提需要是周边道路沉降.dat文件类似的
-        b = '周边管线'  # b='周边管线' #####前提需要是周边道路沉降.dat文件类似的
+        b = '沉降'  # b='周边管线' #####前提需要是周边道路沉降.dat文件类似的@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         c = '周边地表'  # c='周边地表' #####前提需要是周边道路沉降.dat文件类似的
         d = '周边建筑'  # d='周边建筑' #####前提需要是周边道路沉降.dat文件类似的
         e = '坡顶沉降'  # e='坡顶沉降' #####前提需要是周边道路沉降.dat文件类似的
@@ -3063,7 +3067,8 @@ class Jikeng_make_dir(QDialog):
             [np.min(numa), np.min(numb), np.min(numc), np.min(numd), np.min(nume), np.min(numf), np.min(numg),
              np.min(numk), np.min(numm),
              np.min(numh)])  ###共a、b、c、d、e、f、g、h比较
-        qua_path = "D:\\2021\\基坑监测\\2018巷口\\质量评定.doc"
+        qua_path = src_path+'质量评定'
+        # cx_filenames=os.listdir(src_path+'测斜1')#################################################################################测斜@@@@@@@@@@@@@@@@@@@@@@@@@@@
         for j in range(num_min + 1, num_max + 2):  ##num_max>num_min############需要有两期以上
             date1 = sheet1.cell(j, 2).value
             date3 = "第" + str(j - 1) + "期" + str(date1)
@@ -3122,6 +3127,14 @@ class Jikeng_make_dir(QDialog):
                 for name in namem:
                     if (re.findall('第(.*)期', name, flags=0)[0] == str(j - 1)):
                         shutil.copy(path3 + name, datex2 + '\\' + '原始数据' + '\\')  # 将通过遍历源目标文降下的dat文降拷贝到对应的目标文降夹下
+            # for cx_name in cx_filenames:
+            #     if (re.findall('第(.*)期', cx_name, flags=0)[0] == str(j - 1)):    ####################################测斜@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            #         shutil.copy(src_path+'测斜1'+'\\' + cx_name, datex2 + '\\' + '原始数据' + '\\')  # 将通过遍历源目标文降下的dat文降拷贝到对应的目标文降夹下
+            os.makedirs(datex2 + '\\' + '质量评定')
+            zhiliang_filenames=os.listdir(qua_path)
+            for zhiliang_name in zhiliang_filenames:
+                if (re.findall('第(.*)期', zhiliang_name, flags=0)[0] == str(j - 1)):
+                    shutil.copy(qua_path+'\\' + zhiliang_name, datex2 + '\\' + '质量评定' + '\\')  # 将通过遍历源目标文降下的dat文降拷贝到对应的目标文降夹下
 
 
 class Jikeng_rename(QDialog):
