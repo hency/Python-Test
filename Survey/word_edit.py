@@ -2,9 +2,9 @@ import win32com.client
 
 import openpyxl
 import pandas as pd
-path="D:\\Documents\\OneDrive\\工作\\2021\\基坑监测\\保利天珺A07地块\\日报\\保利天珺A07数据库.xlsx"
-path1 = "D:\\Documents\\OneDrive\\工作\\2021\\基坑监测\\保利天珺A07地块\\质量评定.doc"
-path2="D:\\Documents\\OneDrive\\工作\\2021\\基坑监测\\保利天珺A07地块\\质量评定\\"
+path="D:\\Documents\\OneDrive\\工作\\2021\\基坑监测\\万科华侨城A01地块\\项目资料\\新数据库\\华侨城01数据库.xlsx"
+path1 = "D:\\Documents\\OneDrive\\工作\\2021\\基坑监测\\质量评定.doc"
+path2="D:\\Documents\\OneDrive\\工作\\2021\\基坑监测\\万科华侨城A01地块\\质量评定\\"
 import shutil
 import os
 import re
