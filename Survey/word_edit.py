@@ -40,7 +40,7 @@ def replace_main(path,old_text,new_text):
 
 
 if __name__ == '__main__':
-    for i in range(74,len(date)):
+    for i in range(len(date)):
         path1=filenames[i]
         year1 = re.findall(r'(.*)年', date1[i], flags=0)[0]
         month1 = str(int(re.findall(r'年(.*)月', date1[i], flags=0)[0]))
