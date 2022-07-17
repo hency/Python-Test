@@ -2,9 +2,9 @@ import win32com.client
 
 import openpyxl
 import pandas as pd
-path="D:\\2022\\基坑监测\\华侨城4-2\\4-2数据库36、37号点.xlsx"
-path1 = "D:\\2022\\基坑监测\\华侨城4-2\\质量评定 - 副本 - 副本.doc"
-path2="D:\\2022\\基坑监测\\华侨城4-2\\"
+path="D:\\Documents\\OneDrive\\工作\\2021\\基坑监测\\保利天珺A07地块\\日报\\保利天珺A07数据库.xlsx"
+path1 = "D:\\Documents\\OneDrive\\工作\\2021\\基坑监测\\保利天珺A07地块\\质量评定.doc"
+path2="D:\\Documents\\OneDrive\\工作\\2021\\基坑监测\\保利天珺A07地块\\质量评定\\"
 import shutil
 import os
 import re
@@ -40,7 +40,7 @@ def replace_main(path,old_text,new_text):
 
 
 if __name__ == '__main__':
-    for i in range(len(date)):
+    for i in range(74,len(date)):
         path1=filenames[i]
         year1 = re.findall(r'(.*)年', date1[i], flags=0)[0]
         month1 = str(int(re.findall(r'年(.*)月', date1[i], flags=0)[0]))
