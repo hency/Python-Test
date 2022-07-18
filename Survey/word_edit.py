@@ -45,14 +45,14 @@ if __name__ == '__main__':
         year1 = re.findall(r'(.*)年', date1[i], flags=0)[0]
         month1 = str(int(re.findall(r'年(.*)月', date1[i], flags=0)[0]))
         day1 = str(int(re.findall(r'月(.*)日', date1[i], flags=0)[0]))
-        old_text = "          年         月         日"
+        old_text = "                                      年         月         日"
         # new_text = "      2022年    5月   12日"
         if(int(month1)<10 and int(day1)<10):
-            new_text="      "+year1+'年'+'    '+month1+'月'+'    '+day1+'日'
+            new_text="                             "+year1+'年'+'    '+month1+'月'+'    '+day1+'日'
         if(int(month1)<10 and (int(day1)>10 or int(day1)==10)):
-            new_text="      "+year1+'年'+'    '+month1+'月'+'   '+day1+'日'
+            new_text="                             "+year1+'年'+'    '+month1+'月'+'   '+day1+'日'
         if((int(month1)>10 or int(month1) == 10) and int(day1)<10):
-            new_text="      "+year1+'年'+'   '+month1+'月'+'    '+day1+'日'
+            new_text="                             "+year1+'年'+'   '+month1+'月'+'    '+day1+'日'
         if ((int(month1) > 10 or int(month1) == 10) and (int(day1)>10 or int(day1)==10)):
-            new_text="      "+year1+'年'+'   '+month1+'月'+'   '+day1+'日'
+            new_text="                             "+year1+'年'+'   '+month1+'月'+'   '+day1+'日'
         replace_main(path1,old_text,new_text)
