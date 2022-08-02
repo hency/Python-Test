@@ -2,9 +2,9 @@ import win32com.client
 
 import openpyxl
 import pandas as pd
-path="D:\\Documents\\OneDrive\\工作\\2021\\基坑监测\\万科华侨城A01地块\\项目资料\\新数据库\\华侨城01数据库.xlsx"
-path1 = "D:\\Documents\\OneDrive\\工作\\2021\\基坑监测\\质量评定.doc"
-path2="D:\\Documents\\OneDrive\\工作\\2021\\基坑监测\\万科华侨城A01地块\\质量评定\\"
+path="D:\\2022\\基坑监测\\二附院数据库\\二附院数据库20220502.xlsx" ##数据库
+path1 = "D:\\2022\\基坑监测\\二附院数据库\\质量评定.doc" ####质量报告模板
+path2="D:\\2022\\基坑监测\\二附院数据库\\" ###存放位置
 import shutil
 import os
 import re
@@ -45,14 +45,14 @@ if __name__ == '__main__':
         year1 = re.findall(r'(.*)年', date1[i], flags=0)[0]
         month1 = str(int(re.findall(r'年(.*)月', date1[i], flags=0)[0]))
         day1 = str(int(re.findall(r'月(.*)日', date1[i], flags=0)[0]))
-        old_text = "                                      年         月         日"
+        old_text = "          年         月         日"
         # new_text = "      2022年    5月   12日"
         if(int(month1)<10 and int(day1)<10):
-            new_text="                             "+year1+'年'+'    '+month1+'月'+'    '+day1+'日'
+            new_text="      "+year1+'年'+'    '+month1+'月'+'    '+day1+'日'
         if(int(month1)<10 and (int(day1)>10 or int(day1)==10)):
-            new_text="                             "+year1+'年'+'    '+month1+'月'+'   '+day1+'日'
+            new_text="      "+year1+'年'+'    '+month1+'月'+'   '+day1+'日'
         if((int(month1)>10 or int(month1) == 10) and int(day1)<10):
-            new_text="                             "+year1+'年'+'   '+month1+'月'+'    '+day1+'日'
+            new_text="      "+year1+'年'+'   '+month1+'月'+'    '+day1+'日'
         if ((int(month1) > 10 or int(month1) == 10) and (int(day1)>10 or int(day1)==10)):
-            new_text="                             "+year1+'年'+'   '+month1+'月'+'   '+day1+'日'
+            new_text="      "+year1+'年'+'   '+month1+'月'+'   '+day1+'日'
         replace_main(path1,old_text,new_text)

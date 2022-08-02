@@ -1,9 +1,8 @@
-import openpyxl
-from openpyxl import load_workbook
-path="D:\\2022\\主体沉降\\润永通\\测线 - 副本.xlsx"
-book1=load_workbook(path)
-sheet1=book1.get_sheet_by_name('测线')
-print(sheet1.cell(3,3).value)
-
-import pandas as pd
-pd1=pd.read_excel(path,'测线')
+import os
+import re
+path="D:\\2022\\基坑监测\\二附院数据库\\测斜"
+filenames=os.listdir(path)
+for i in range(len(filenames)):
+    filenames1=os.listdir(path+'\\'+filenames[i])
+    for j in range(len(filenames1)):
+        os.rename(path+'\\'+filenames[i]+'\\'+filenames1[j],path+'\\'+filenames[i]+'\\'+filenames[i]+'-'+filenames1[j])

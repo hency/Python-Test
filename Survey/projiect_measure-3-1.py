@@ -1,5 +1,4 @@
 #coding=utf-8
-
 import sys
 from PyQt5.QtWidgets import QWidget,QPushButton,QVBoxLayout,QHBoxLayout,QGridLayout,QFormLayout,QLineEdit,QLabel,QMessageBox,QApplication,\
     QDialog,QAction,QDateTimeEdit,QFileDialog
@@ -698,7 +697,7 @@ class Jikeng_original_cj(QDialog):
         dsheet1 = dpath.get_sheet_by_name('日报')
         sheetname_from_dateset = []
         for name in dpath.sheetnames:
-            if ('周边地表' in name): ######################################坡顶沉降、周边管线、@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            if ('坡顶沉降' in name): ######################################坡顶沉降、周边管线、周边道路@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                 sheetname_from_dateset.append(name)
                 print('沉降数据库有：%s', name)
             else:
@@ -1422,7 +1421,7 @@ class Jikeng_original_cj(QDialog):
                         index3 = re.findall(r'(.*)期', pat_name[i])[0]
                         INDEX3.append(index3)
                         book2 = load_workbook(dateset_path)
-                        sheet2 = book2.get_sheet_by_name('周边地表沉降成果表') ############周边道路、周边管线、周边建筑、坡顶沉降成果表 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                        sheet2 = book2.get_sheet_by_name('坡顶沉降成果表') ############选择其中一个：周边道路成果表、周边管线成果表、周边建筑成果表、坡顶沉降成果表 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                         nrows2 = sheet2.max_row
                         for z3 in range(13, nrows2 + 1):
                             if (int(index3) == sheet2.cell(z3, 1).value):
@@ -1458,7 +1457,7 @@ class Jikeng_original_cj(QDialog):
                         path = path1 + pat_name[z1]
                         data1 = pd.read_excel(path, '原始数据-支点')
                         # fid1 = open(path1 + '沉降观测数据第' + INDEX3[num_1 - 1] + '期' + '.txt', 'w')
-                        fid1 = open(path1 + '周边地表沉降' + INDEX3[num_1 - 1] + '.dat', 'w')  ##坡顶沉降、周边地表 ###########@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                        fid1 = open(path1 + '坡顶沉降' + INDEX3[num_1 - 1] + '.dat', 'w')  ##坡顶沉降、周边地表沉降、周边管线沉降 ###########@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                         date3 = str(DATE[num_1 - 1])
                         x1 = date3.replace('-', '年', 1)
                         x2 = x1.replace('-', '月', 1)
@@ -2918,7 +2917,7 @@ class Jikeng_make_dir(QDialog):
                 row2 = sheet1.max_row  # 根据日报获取期数
         file_names = os.listdir(path3)
         a = '周边道路'  # a='周边道路' #####前提需要是周边道路沉降.dat文件类似的
-        b = '沉降'  # b='周边管线' #####前提需要是周边道路沉降.dat文件类似的@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        b = '周边环境沉降'  # b='周边管线' #####前提需要是周边道路沉降.dat文件类似的@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         c = '周边地表'  # c='周边地表' #####前提需要是周边道路沉降.dat文件类似的
         d = '周边建筑'  # d='周边建筑' #####前提需要是周边道路沉降.dat文件类似的
         e = '坡顶沉降'  # e='坡顶沉降' #####前提需要是周边道路沉降.dat文件类似的
@@ -3069,7 +3068,7 @@ class Jikeng_make_dir(QDialog):
              np.min(numk), np.min(numm),
              np.min(numh)])  ###共a、b、c、d、e、f、g、h比较
         qua_path = src_path+'质量评定'
-        # cx_filenames=os.listdir(src_path+'测斜1')#################################################################################测斜@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        cx_filenames=os.listdir(src_path+'测斜1')#################################################################################测斜@@@@@@@@@@@@@@@@@@@@@@@@@@@
         for j in range(num_min + 1, num_max + 2):  ##num_max>num_min############需要有两期以上
             date1 = sheet1.cell(j, 2).value
             date3 = "第" + str(j - 1) + "期" + str(date1)
@@ -3128,9 +3127,9 @@ class Jikeng_make_dir(QDialog):
                 for name in namem:
                     if (re.findall('第(.*)期', name, flags=0)[0] == str(j - 1)):
                         shutil.copy(path3 + name, datex2 + '\\' + '原始数据' + '\\')  # 将通过遍历源目标文降下的dat文降拷贝到对应的目标文降夹下
-            # for cx_name in cx_filenames:
-            #     if (re.findall('第(.*)期', cx_name, flags=0)[0] == str(j - 1)):    ####################################测斜@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-            #         shutil.copy(src_path+'测斜1'+'\\' + cx_name, datex2 + '\\' + '原始数据' + '\\')  # 将通过遍历源目标文降下的dat文降拷贝到对应的目标文降夹下
+            for cx_name in cx_filenames:
+                if (re.findall('第(.*)期', cx_name, flags=0)[0] == str(j - 1)):    ####################################测斜@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                    shutil.copy(src_path+'测斜1'+'\\' + cx_name, datex2 + '\\' + '原始数据' + '\\')  # 将通过遍历源目标文降下的dat文降拷贝到对应的目标文降夹下
             os.makedirs(datex2 + '\\' + '质量评定')
             zhiliang_filenames=os.listdir(qua_path)
             for zhiliang_name in zhiliang_filenames:

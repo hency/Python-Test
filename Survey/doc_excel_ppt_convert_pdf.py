@@ -105,7 +105,7 @@ if __name__ == "__main__":
     # 支持文件夹批量导入
     folder = 'tmp'
     # pathname = os.path.join(os.path.abspath('.'), folder)
-    pathname="D:\\2021\\基坑监测\\赣电中心\\报表x"
+    pathname="D:\\2022\\基坑监测\\高新金地\\金地日报"
 
     # 也支持单个文件的转换
     # pathname = 'test.doc'
