@@ -1,0 +1,111 @@
+For M5|Adr     1|TO  wsg0714.dat                |                      |                      |                      | 
+For M5|Adr     2|TO  Start-Line       BBFF     1|                      |                      |                      | 
+For M5|Adr     3|KD1      BM1                  1|                      |                      |Z        20.00000 m   | 
+For M5|Adr     4|KD1      BM1      30.0 C  1   1|Rb        0.86409 m   |HD         11.104 m   |                      | 
+For M5|Adr     5|KD1      BM1      30.0 C  1   1|Rb        0.86413 m   |HD         11.106 m   |                      | 
+For M5|Adr     6|KD1        Z      30.0 C  1   1|Rf        1.70287 m   |HD         12.493 m   |                      | 
+For M5|Adr     7|KD1        Z      30.0 C  1   1|Rf        1.70291 m   |HD         12.488 m   |                      | 
+For M5|Adr     8|KD1        Z      30.0 C      1|                      |                      |Z        19.16122 m   | 
+For M5|Adr     9|KD1        Z      31.0 C  1   1|Rb        0.23749 m   |HD         16.157 m   |                      | 
+For M5|Adr    10|KD1        Z      31.0 C  1   1|Rb        0.23748 m   |HD         16.158 m   |                      | 
+For M5|Adr    11|TO  Start-Line       BBFF     2|                      |                      |                      | 
+For M5|Adr    12|KD1      BM1                  2|                      |                      |Z        20.00000 m   | 
+For M5|Adr    13|KD1      BM1      31.0 C  1   2|Rb        0.97773 m   |HD         11.018 m   |                      | 
+For M5|Adr    14|KD1      BM1      31.0 C  1   2|Rb        0.97776 m   |HD         11.015 m   |                      | 
+For M5|Adr    15|KD1        Z      32.0 C  1   2|Rf        1.76986 m   |HD         11.737 m   |                      | 
+For M5|Adr    16|KD1        Z      32.0 C  1   2|Rf        1.76985 m   |HD         11.742 m   |                      | 
+For M5|Adr    17|KD1        Z      32.0 C      2|                      |                      |Z        19.20789 m   | 
+For M5|Adr    18|KD1        Z      32.0 C  1   2|Rb        0.26814 m   |HD         13.922 m   |                      | 
+For M5|Adr    19|KD1        Z      32.0 C  1   2|Rb        0.26813 m   |HD         13.923 m   |                      | 
+For M5|Adr    20|KD1        Z      33.0 C  1   2|Rf        1.80105 m   |HD         14.069 m   |                      | 
+For M5|Adr    21|KD1        Z      33.0 C  1   2|Rf        1.80114 m   |HD         14.053 m   |                      | 
+For M5|Adr    22|KD1        Z      33.0 C      2|                      |                      |Z        17.67493 m   | 
+For M5|Adr    23|KD1        Z      33.0 C  1   2|Rb        1.00615 m   |HD         14.491 m   |                      | 
+For M5|Adr    24|KD1        Z      33.0 C  1   2|Rb        1.00621 m   |HD         14.486 m   |                      | 
+For M5|Adr    25|KD1        Z      33.0 C  1   2|Rf        1.14604 m   |HD         13.558 m   |                      | 
+For M5|Adr    26|KD1        Z      33.0 C  1   2|Rf        1.14598 m   |HD         13.559 m   |                      | 
+For M5|Adr    27|KD1        Z      33.0 C      2|                      |                      |Z        17.53510 m   | 
+For M5|Adr    28|KD1        Z      34.0 C  1   2|Rb        1.05551 m   |HD          7.687 m   |                      | 
+For M5|Adr    29|KD1        Z      34.0 C  1   2|Rb        1.05557 m   |HD          7.684 m   |                      | 
+For M5|Adr    30|TO  Intermediate sight.       2|                      |                      |                      | 
+For M5|Adr    31|KD1     WY28      34.0 C  1   2|Rz        1.20554 m   |HD          4.029 m   |Z        17.38510 m   | 
+For M5|Adr    32|KD1      LZ1      34.0 C  1   2|Rz        1.89681 m   |HD         10.308 m   |Z        16.69383 m   | 
+For M5|Adr    33|TO  End of interm. sight.     2|                      |                      |                      | 
+For M5|Adr    34|KD1        Z      34.0 C  1   2|Rf        1.49637 m   |HD          7.452 m   |                      | 
+For M5|Adr    35|KD1        Z      34.0 C  1   2|Rf        1.49637 m   |HD          7.448 m   |                      | 
+For M5|Adr    36|KD1        Z      34.0 C      2|                      |                      |Z        17.09427 m   | 
+For M5|Adr    37|KD1        Z      34.0 C  1   2|Rb        0.47656 m   |HD          9.039 m   |                      | 
+For M5|Adr    38|KD1        Z      34.0 C  1   2|Rb        0.47657 m   |HD          9.038 m   |                      | 
+For M5|Adr    39|TO  Intermediate sight.       2|                      |                      |                      | 
+For M5|Adr    40|KD1      LZ1      34.0 C  1   2|Rz        0.87650 m   |HD          6.917 m   |Z        16.69434 m   | 
+For M5|Adr    41|KD1     WY44      34.0 C  1   2|Rz        1.55835 m   |HD         11.906 m   |Z        16.01249 m   | 
+For M5|Adr    42|TO  End of interm. sight.     2|                      |                      |                      | 
+For M5|Adr    43|TO  Intermediate sight.       2|                      |                      |                      | 
+For M5|Adr    44|KD1      LZ2      35.0 C  1   2|Rz        1.57064 m   |HD         17.028 m   |Z        16.00020 m   | 
+For M5|Adr    45|TO  End of interm. sight.     2|                      |                      |                      | 
+For M5|Adr    46|KD1        Z      35.0 C  1   2|Rf        1.52722 m   |HD          9.214 m   |                      | 
+For M5|Adr    47|KD1        Z      35.0 C  1   2|Rf        1.52720 m   |HD          9.214 m   |                      | 
+For M5|Adr    48|KD1        Z      35.0 C      2|                      |                      |Z        16.04363 m   | 
+For M5|Adr    49|KD1        Z      35.0 C  1   2|Rb        1.38635 m   |HD         11.966 m   |                      | 
+For M5|Adr    50|KD1        Z      35.0 C  1   2|Rb        1.38634 m   |HD         11.962 m   |                      | 
+For M5|Adr    51|TO  Intermediate sight.       2|                      |                      |                      | 
+For M5|Adr    52|KD1     WY45      35.0 C  1   2|Rz        1.45369 m   |HD         14.626 m   |Z        15.97628 m   | 
+For M5|Adr    53|TO  End of interm. sight.     2|                      |                      |                      | 
+For M5|Adr    54|TO  Intermediate sight.       2|                      |                      |                      | 
+For M5|Adr    55|KD1      LZ3      35.0 C  1   2|Rz        1.52860 m   |HD         14.058 m   |Z        15.90137 m   | 
+For M5|Adr    56|TO  End of interm. sight.     2|                      |                      |                      | 
+For M5|Adr    57|KD1        Z      35.0 C  1   2|Rf        1.53160 m   |HD         11.110 m   |                      | 
+For M5|Adr    58|KD1        Z      35.0 C  1   2|Rf        1.53168 m   |HD         11.106 m   |                      | 
+For M5|Adr    59|KD1        Z      35.0 C      2|                      |                      |Z        15.89833 m   | 
+For M5|Adr    60|KD1        Z      35.0 C  1   2|Rb        1.38326 m   |HD         20.599 m   |                      | 
+For M5|Adr    61|KD1        Z      35.0 C  1   2|Rb        1.38326 m   |HD         20.593 m   |                      | 
+For M5|Adr    62|TO  Intermediate sight.       2|                      |                      |                      | 
+For M5|Adr    63|KD1     WY22      35.0 C  1   2|Rz        1.40286 m   |HD         10.547 m   |Z        15.87873 m   | 
+For M5|Adr    64|KD1     WY23      35.0 C  1   2|Rz        1.38838 m   |HD         13.801 m   |Z        15.89321 m   | 
+For M5|Adr    65|TO  End of interm. sight.     2|                      |                      |                      | 
+For M5|Adr    66|TO  Intermediate sight.       2|                      |                      |                      | 
+For M5|Adr    67|KD1     WY24      35.0 C  1   2|Rz        1.36038 m   |HD         26.148 m   |Z        15.92121 m   | 
+For M5|Adr    68|TO  End of interm. sight.     2|                      |                      |                      | 
+For M5|Adr    69|KD1        Z      35.0 C  1   2|Rf        1.30447 m   |HD         20.560 m   |                      | 
+For M5|Adr    70|KD1        Z      35.0 C  1   2|Rf        1.30448 m   |HD         20.559 m   |                      | 
+For M5|Adr    71|KD1        Z      35.0 C      2|                      |                      |Z        15.97712 m   | 
+For M5|Adr    72|KD1        Z      35.0 C  1   2|Rb        1.79192 m   |HD         22.285 m   |                      | 
+For M5|Adr    73|KD1        Z      35.0 C  1   2|Rb        1.79198 m   |HD         22.277 m   |                      | 
+For M5|Adr    74|TO  Intermediate sight.       2|                      |                      |                      | 
+For M5|Adr    75|KD1    WY24.      36.0 C  1   2|Rz        1.84705 m   |HD         17.080 m   |Z        15.92202 m   | 
+For M5|Adr    76|KD1     WY25      36.0 C  1   2|Rz        1.70808 m   |HD          3.871 m   |Z        16.06099 m   | 
+For M5|Adr    77|TO  End of interm. sight.     2|                      |                      |                      | 
+For M5|Adr    78|KD1        Z      36.0 C  1   2|Rf        0.69566 m   |HD         22.325 m   |                      | 
+For M5|Adr    79|KD1        Z      36.0 C  1   2|Rf        0.69560 m   |HD         22.335 m   |                      | 
+For M5|Adr    80|KD1        Z      36.0 C      2|                      |                      |Z        17.07343 m   | 
+For M5|Adr    81|KD1        Z      36.0 C  1   2|Rb        1.75497 m   |HD         24.721 m   |                      | 
+For M5|Adr    82|KD1        Z      36.0 C  1   2|Rb        1.75501 m   |HD         24.717 m   |                      | 
+For M5|Adr    83|KD1        Z      36.0 C  1   2|Rf        1.29388 m   |HD         25.369 m   |                      | 
+For M5|Adr    84|KD1        Z      36.0 C  1   2|Rf        1.29388 m   |HD         25.377 m   |                      | 
+For M5|Adr    85|KD1        Z      36.0 C      2|                      |                      |Z        17.53454 m   | 
+For M5|Adr    86|KD1        Z      36.0 C  1   2|Rb        1.37830 m   |HD          5.123 m   |                      | 
+For M5|Adr    87|KD1        Z      36.0 C  1   2|Rb        1.37830 m   |HD          5.122 m   |                      | 
+For M5|Adr    88|KD1        Z      36.0 C  1   2|Rf        1.64034 m   |HD          6.072 m   |                      | 
+For M5|Adr    89|KD1        Z      36.0 C  1   2|Rf        1.64037 m   |HD          6.070 m   |                      | 
+For M5|Adr    90|KD1        Z      36.0 C      2|                      |                      |Z        17.27249 m   | 
+For M5|Adr    91|KD1        Z      36.0 C  1   2|Rb        1.56701 m   |HD         15.136 m   |                      | 
+For M5|Adr    92|KD1        Z      36.0 C  1   2|Rb        1.56702 m   |HD         15.135 m   |                      | 
+For M5|Adr    93|TO  Intermediate sight.       2|                      |                      |                      | 
+For M5|Adr    94|KD1      BM0      36.0 C  1   2|Rz        1.53878 m   |HD          6.051 m   |Z        17.30072 m   | 
+For M5|Adr    95|TO  End of interm. sight.     2|                      |                      |                      | 
+For M5|Adr    96|KD1        Z      36.0 C  1   2|Rf        0.72318 m   |HD         15.375 m   |                      | 
+For M5|Adr    97|KD1        Z      36.0 C  1   2|Rf        0.72314 m   |HD         15.375 m   |                      | 
+For M5|Adr    98|KD1        Z      36.0 C      2|                      |                      |Z        18.11634 m   | 
+For M5|Adr    99|KD1        Z      36.0 C  1   2|Rb        1.91654 m   |HD         13.758 m   |                      | 
+For M5|Adr   100|KD1        Z      36.0 C  1   2|Rb        1.91699 m   |HD         13.832 m   |                      | 
+For M5|Adr   101|KD1        Z      36.0 C  1   2|Rf        0.58050 m   |HD         12.442 m   |                      | 
+For M5|Adr   102|KD1        Z      36.0 C  1   2|Rf        0.58045 m   |HD         12.442 m   |                      | 
+For M5|Adr   103|KD1        Z      36.0 C      2|                      |                      |Z        19.45264 m   | 
+For M5|Adr   104|KD1        Z      36.0 C  1   2|Rb        1.85603 m   |HD          9.902 m   |                      | 
+For M5|Adr   105|KD1        Z      36.0 C  1   2|Rb        1.85606 m   |HD          9.903 m   |                      | 
+For M5|Adr   106|KD1      BM1      36.0 C  1   2|Rf        1.30777 m   |HD         10.127 m   |                      | 
+For M5|Adr   107|KD1      BM1      36.0 C  1   2|Rf        1.30779 m   |HD         10.127 m   |                      | 
+For M5|Adr   108|KD1      BM1      36.0 C      2|                      |                      |Z        20.00090 m   | 
+For M5|Adr   109|KD1      BM1                  2|Sh        0.00090 m   |dz       -0.00090 m   |Z        20.00000 m   | 
+For M5|Adr   110|KD2      BM1       13         2|Db         179.67 m   |Df         179.41 m   |Z        20.00090 m   | 
+For M5|Adr   111|TO  End-Line                  2|                      |                      |                      | 

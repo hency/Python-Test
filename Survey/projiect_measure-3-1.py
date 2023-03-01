@@ -17,6 +17,8 @@ import shutil
 from openpyxl import load_workbook
 import math
 import datetime
+from matplotlib.pyplot import rcParams
+from matplotlib import pyplot
 class Data_Process(QWidget):
     def __init__(self):
         super(Data_Process,self).__init__()
@@ -65,13 +67,13 @@ class Zhuti_Data_Process(QDialog):
         self.pushbutton2=QPushButton(self)
         self.pushbutton2.setText('创建文件夹')
         self.label3=QLabel(self)
-        self.label3.setText('(3)闭合差提取并生成：高差偶然中误差及高差全中误差')
+        self.label3.setText('(3)闭合差提取：只限生成（商业（SX-CJX）与住宅（X-CJX）两种模式）')
         self.pushbutton3=QPushButton(self)
         self.pushbutton3.setText('闭合差提取')
         self.label4=QLabel(self)
-        self.label4.setText('(4)生成基准点复测表')
+        self.label4.setText('(4)主体时间-荷载-沉降量曲线:根据最终日报确定')
         self.pushbutton4=QPushButton(self)
-        self.pushbutton4.setText('基准点复测表')
+        self.pushbutton4.setText('累计变化曲线图')
         self.label5=QLabel(self)
         self.label5.setText('(5)生成主体沉降日报：根据浇筑时间模板、及初始值、拟合模型曲线系数')
         self.pushbutton5=QPushButton(self)
@@ -81,9 +83,9 @@ class Zhuti_Data_Process(QDialog):
         self.pushbutton6=QPushButton(self)
         self.pushbutton6.setText('生成数据库')
         self.label7=QLabel(self)
-        self.label7.setText('(7)主体时间-荷载-沉降量曲线:根据最终日报确定')
+        self.label7.setText('(7)累计变化量的提取')
         self.pushbutton7=QPushButton(self)
-        self.pushbutton7.setText('累计变化曲线图')
+        self.pushbutton7.setText('累计变化量')
         self.V_layout1 = QVBoxLayout()
         self.V_layout2 = QVBoxLayout()
         self.H_layout1 = QHBoxLayout()
@@ -126,11 +128,11 @@ class Zhuti_Data_Process(QDialog):
         demo1.exec_()
 
     def enter_pushbutton4(self):
-        pass
+        demo1 = Zhuti_CCURV()
+        demo1.exec_()
 
     def enter_pushbutton5(self):
-        demo1 = Zhuti_ribao()
-        demo1.exec_()
+        pass
 
     def enter_pushbutton6(self):
         demo1 = Zhuti_dataset()
@@ -241,59 +243,322 @@ class Zhuti_bihecha(QDialog):
         filename=os.listdir(path1)
         book1=openpyxl.Workbook()
         sheet1=book1.create_sheet('闭合差')
-        for i in range(len(filename)-1):
-            for j in range(i + 1, len(filename)):
-                a = int(re.findall(r'\d+', filename[i])[0])
-                b = int(re.findall(r'\d+', filename[j])[0])
-                if (a > b):
-                    mid1 = filename[i]
-                    filename[i] = filename[j]
-                    filename[j] = mid1
-        k = 1
-        for i in range(len(filename)):
-            filename1 = path1 + filename[i]
-            filename2 = os.listdir(filename1)
-            k1 = 1
-            for j in range(len(filename2)):
-                for z in range(len(filename2)):
-                    if ('第' + str(j + 1) + '期' in filename2[z]):
-                        filename3 = os.listdir(filename1 + '\\' + filename2[z])
-                        for z1 in range(len(filename3)):
-                            if ('dat' in filename3[z1]):
-                                filename4 = filename3[z1]
-                        f = open(filename1 + '\\' + filename2[z] + '\\' + filename4, 'r')
-                        file1 = f.readlines()
-                        count1 = len(file1)
-                        r1 = file1[count1 - 3][58:66] #r1 = file1[count1 - 3 - 1][58:66]
-                        # print(file1[count1-3-1])
-                        f.close()
-                        sheet1.cell(k1, k).value = float(r1) * 1000
-                        k1 = k1 + 1
-            k = k + 1
-        book1.save(pathx1+'闭合差1.xlsx')
-class Zhuti_ribao(QDialog):
+        book2=openpyxl.Workbook()
+        sheet2=book2.create_sheet('闭合差')
+        filename_shangye=[]
+        filename_zhuzhai=[]
+        for Ai in range(len(filename)):
+            if('S' in filename[Ai]):
+                ############################################说明存在商业楼###################################
+                filename_shangye.append(filename[Ai])
+            else:
+                filename_zhuzhai.append(filename[Ai])
+        #######################################################################住宅闭合差###############################
+        if(filename_zhuzhai==[]):
+            flag=0
+        else:
+            for i in range(len(filename_zhuzhai)-1):
+                for j in range(i + 1, len(filename_zhuzhai)):
+                    a = int(re.findall(r'\d+', filename_zhuzhai[i])[0])
+                    b = int(re.findall(r'\d+', filename_zhuzhai[j])[0])
+                    if (a > b):
+                        mid1 = filename_zhuzhai[i]
+                        filename_zhuzhai[i] = filename_zhuzhai[j]
+                        filename_zhuzhai[j] = mid1
+            k = 1
+            for i in range(len(filename_zhuzhai)):
+                filename1 = path1 + filename_zhuzhai[i]
+                filename2 = os.listdir(filename1)
+                k1 = 1
+                for j in range(len(filename2)):
+                    for z in range(len(filename2)):
+                        if ('第' + str(j + 1) + '期' in filename2[z]):
+                            filename3 = os.listdir(filename1 + '\\' + filename2[z])
+                            for z1 in range(len(filename3)):
+                                if ('dat' in filename3[z1]):
+                                    filename4 = filename3[z1]
+                            f = open(filename1 + '\\' + filename2[z] + '\\' + filename4, 'r')
+                            file1 = f.readlines()
+                            count1 = len(file1)
+                            r1 = file1[count1 - 3][58:66] #r1 = file1[count1 - 3 - 1][58:66]
+                            # print(file1[count1-3-1])
+                            f.close()
+                            sheet1.cell(k1, k).value = float(r1) * 1000
+                            k1 = k1 + 1
+                k = k + 1
+            book1.save(pathx1+'闭合差_住宅.xlsx')
+        ######################################################################商业闭合差###############################
+        if(filename_shangye==[]):
+            flag=0
+        else:
+            for i in range(len(filename_shangye)-1):
+                for j in range(i + 1, len(filename_shangye)):
+                    a = int(re.findall(r'\d+', filename_shangye[i])[0])
+                    b = int(re.findall(r'\d+', filename_shangye[j])[0])
+                    if (a > b):
+                        mid1 = filename_shangye[i]
+                        filename_shangye[i] = filename_shangye[j]
+                        filename_shangye[j] = mid1
+            k = 1
+            for i in range(len(filename_shangye)):
+                filename1 = path1 + filename_shangye[i]
+                filename2 = os.listdir(filename1)
+                k1 = 1
+                for j in range(len(filename2)):
+                    for z in range(len(filename2)):
+                        if ('第' + str(j + 1) + '期' in filename2[z]):
+                            filename3 = os.listdir(filename1 + '\\' + filename2[z])
+                            for z1 in range(len(filename3)):
+                                if ('dat' in filename3[z1]):
+                                    filename4 = filename3[z1]
+                            f = open(filename1 + '\\' + filename2[z] + '\\' + filename4, 'r')
+                            file1 = f.readlines()
+                            count1 = len(file1)
+                            r1 = file1[count1 - 3][58:66] #r1 = file1[count1 - 3 - 1][58:66]
+                            # print(file1[count1-3-1])
+                            f.close()
+                            sheet2.cell(k1, k).value = float(r1) * 1000
+                            k1 = k1 + 1
+                k = k + 1
+            book2.save(pathx1+'闭合差_商业.xlsx')
+class Zhuti_CCURV(QDialog):
     def __init__(self):
-        super(Zhuti_ribao,self).__init__()
+        super(Zhuti_CCURV,self).__init__()
         self.resize(600,300)
-        self.setWindowTitle('主体沉降日报创建')
-        self.label1 = QLabel('打开初始值数据存放路径：数据库命名需要按照规则命名', self)
-        self.label2 = QLabel('打开浇筑时间数据存放路径：数据库命名需要按照规则命名', self)
+        self.setWindowTitle('主体沉降累计变化量创建')
+        self.label1 = QLabel('(4)打开累计变化量的位置', self)
+        self.label2 = QLabel('(1)根据需求将项目名称键入', self)
+        self.editline1 = QLineEdit(self)
+        self.label3 = QLabel('(2)根据需求将附图顺序键入', self)
+        self.editline2 = QLineEdit(self)
+        self.label4 = QLabel('(3)根据需求将X的freqs顺序键入', self)
+        self.editline3 = QLineEdit(self)
         self.button1=QPushButton(self)
-        self.button1.setText('执行主体沉降闭合差提取程序')
+        self.button1.setText('执行生成曲线的程序')
         self.V_layout1=QVBoxLayout()
         self.Layout__init()
         self.display_editline()
     def Layout__init(self):
-        self.V_layout1.addWidget(self.label1)
         self.V_layout1.addWidget(self.label2)
+        self.V_layout1.addWidget(self.editline1)
+        self.V_layout1.addWidget(self.label3)
+        self.V_layout1.addWidget(self.editline2)
+        self.V_layout1.addWidget(self.label4)
+        self.V_layout1.addWidget(self.editline3)
+        self.V_layout1.addWidget(self.label1)
         self.V_layout1.addWidget(self.button1)
         self.setLayout(self.V_layout1)
     def display_editline(self):
-        self.button1.clicked.connect(self.zhuti_ribao)
+        self.button1.clicked.connect(self.zhuti_ccurv)
         # self.button2.clicked.connect(self.open_excel_file)
         # self.editline5.setPlaceholderText('从日历选择日期')
-    def zhuti_ribao(self):
-        pass
+    def zhuti_ccurv(self):
+        src_path = QFileDialog.getOpenFileName(self, '选择文件', '', 'Excel files(*.xlsx , *.xls)')[0]
+        # src_path = "D:\\2022\\主体沉降\\新力上园主体沉降\\累计变化量.xlsx"
+        book1 = openpyxl.load_workbook(src_path)
+        sheetnames = book1.sheetnames
+        Cnumber = self.editline1.text()
+        # projiect_name = '新力上园'
+        projiect_name=self.editline1.text()
+        index_sum = len(sheetnames)  #############################################修改
+        # index_futu = ['1', '2', '3'] ###########################################################
+        index_futu=self.editline2.text()
+        # freqs = ['80d', '80d', '80d']##############################################################
+        freqs =self.editline3.text()
+        for p in range(index_sum):
+            loudong = sheetnames[p]
+            data = pd.read_excel(src_path, sheetnames[p])
+            marker = ['.', 's', 'o', 'v', '^', '<', '>', 'P', '*', '3', '4', '8', '1', '2', 'h', 'H', '+', 'x', 'D',
+                      'd', '|', '_']
+            color = ['#00FFFF', '#7FFFD4',
+                     '#000000', '#8A2BE2', '#A52A2A', '#DEB887', '#5F9EA0',
+                     '#7FFF00', '#D2691E', '#FF7F50', '#6495ED', '#DC143C',
+                     '#B8860B', '#A9A9A9', '#006400', '#BDB76B', '#8B008B',
+                     '#556B2F', '#FF8C00', '#9932CC', '#8B0000', '#E9967A', '#8FBC8F', '#483D8B',
+                     '#2F4F4F', '#00CED1', '#9400D3', '#FF1493', '#00BFFF', '#696969', '#1E90FF',
+                     '#B22222', '#FFFAF0', '#228B22', '#FF00FF', '#DCDCDC', '#F8F8FF', '#FFD700',
+                     '#DAA520', '#808080', '#008000', '#ADFF2F', '#F0FFF0', '#FF69B4', '#CD5C5C',
+                     '#4B0082', '#FFFFF0', '#F0E68C', '#E6E6FA', '#FFF0F5', '#7CFC00', '#FFFACD',
+                     '#ADD8E6', '#F08080', '#E0FFFF', '#FAFAD2', '#90EE90', '#D3D3D3', '#FFB6C1',
+                     '#FFA07A', '#20B2AA', '#87CEFA', '#778899', '#B0C4DE', '#FFFFE0', '#00FF00',
+                     '#32CD32', '#FAF0E6', '#FF00FF', '#800000', '#66CDAA', '#0000CD', '#BA55D3',
+                     '#9370DB', '#3CB371', '#7B68EE', '#00FA9A', '#48D1CC', '#C71585', '#191970',
+                     '#F5FFFA', '#FFE4E1', '#FFE4B5', '#FFDEAD', '#000080', '#FDF5E6', '#808000',
+                     '#6B8E23', '#FFA500', '#FF4500', '#DA70D6', '#EEE8AA', '#98FB98', '#AFEEEE',
+                     '#DB7093', '#FFEFD5', '#FFDAB9', '#CD853F', '#FFC0CB', '#DDA0DD', '#B0E0E6',
+                     '#800080', '#FF0000', '#BC8F8F', '#4169E1', '#8B4513', '#FA8072', '#FAA460',
+                     '#2E8B57', '#FFF5EE', '#A0522D', '#C0C0C0', '#87CEEB', '#6A5ACD', '#708090',
+                     '#FFFAFA', '#00FF7F', '#4682B4', '#D2B48C', '#008080', '#D8BFD8', '#FF6347',
+                     '#40E0D0', '#EE82EE', '#F5DEB3', '#FFFFFF', '#F5F5F5', '#FFFF00', '#9ACD32']
+            for i in range(60):
+                if (np.isnan(data.iloc[i, 0])):
+                    cj_num_index = i - 1
+                    break
+            date = data.iloc[59, :]
+            date1 = []
+            for i in range(data.shape[1]):
+                date1.append(data.iloc[59, i])
+            pyplot.figure(figsize=(20, 11), dpi=160)
+            ax = pyplot.gca()
+            # ax = pyplot.subplot(111)
+            max1 = 0
+            for i in range(cj_num_index + 1):
+                cj = data.iloc[i, :] * -1
+                if (max(data.iloc[i, :]) > max1):
+                    max1 = max(data.iloc[i, :])
+                else:
+                    pass
+                pyplot.plot(date1, cj, marker=marker[i], linestyle='-', c=color[i],
+                            label=re.findall('(.*)#', sheetnames[p], flags=0)[0] + '-' + "CJ" + str(
+                                i + 1))  ####################################修改
+            rcParams['font.sans-serif'] = 'kaiti'
+            pyplot.rcParams['axes.unicode_minus'] = False
+            # font = FontProperties(fname="SimHei.ttf")  # 设置字体
+            labelX = [1, 2, 3, 4, 5]
+            if ((max1 > 0) and (max1 < 5)):
+                label1 = [-5, -4, -3, -2, -1, 0]
+            elif (max1 == 5):
+                label1 = [-5, -4, -3, -2, -1, 0]
+            elif ((max1 > 5) and (max1 < 10)):
+                label1 = [-10, -8, -6, -4, -2, 0]
+            elif (max1 == 10):
+                label1 = [-10, -8, -6, -4, -2, 0]
+            elif ((max1 > 10) and (max1 < 15)):
+                label1 = [-15, -10, -5, 0]
+            elif (max1 == 15):
+                label1 = [-15, -10, -5, 0]
+            elif ((max1 > 15) and (max1 < 20)):
+                label1 = [-20, -15, -10, -5, 0]
+            elif (max1 == 20):
+                label1 = [-20, -10, -5, 0]
+            elif ((max1 > 20) and (max1 < 25)):
+                label1 = [-25, -20, -15, -10, -5, 0]
+            elif (max1 == 25):
+                label1 = [-25, -20, -10, -5, 0]
+            elif ((max1 > 25) and (max1 < 30)):
+                label1 = [-30, -25, -20, -15, -10, -5, 0]
+            elif (max1 == 30):
+                label1 = [-30, -25, -20, -10, -5, 0]
+            elif ((max1 > 30) and (max1 < 35)):
+                label1 = [-35, -30, -25, -20, -15, -10, -5, 0]
+            elif (max1 == 35):
+                label1 = [-35, -30, -25, -20, -10, -5, 0]
+            elif ((max1 > 35) and (max1 < 40)):
+                label1 = [-40, -35, -30, -25, -20, -15, -10, -5, 0]
+            elif (max1 == 40):
+                label1 = [-40, -35, -30, -25, -20, -10, -5, 0]
+            elif ((max1 > 40) and (max1 < 45)):
+                label1 = [-45, -40, -35, -30, -25, -20, -15, -10, -5, 0]
+            elif (max1 == 45):
+                label1 = [-45, -40, -35, -30, -25, -20, -10, -5, 0]
+            elif ((max1 > 45) and (max1 < 50)):
+                label1 = [-50, -45, -40, -35, -30, -25, -20, -15, -10, -5, 0]
+            else:
+                pass
+            ceng_shu = max(data.iloc[58, :])
+            if (ceng_shu < 5 and ceng_shu > 0):
+                label2 = [1, 2, 3, 4, 5]
+            elif (ceng_shu == 5):
+                label2 = [1, 2, 3, 4, 5]
+            if (ceng_shu < 10 and ceng_shu > 5):
+                label2 = [5, 10]
+            elif (ceng_shu == 10):
+                label2 = [5, 10]
+            if (ceng_shu < 15 and ceng_shu > 10):
+                label2 = [5, 10, 15]
+            elif (ceng_shu == 15):
+                label2 = [5, 10, 15]
+            if (ceng_shu < 20 and ceng_shu > 15):
+                label2 = [5, 10, 15, 20]
+            elif (ceng_shu == 20):
+                label2 = [5, 10, 15, 20]
+            if (ceng_shu < 25 and ceng_shu > 20):
+                label2 = [5, 10, 15, 20, 25]
+            elif (ceng_shu == 25):
+                label2 = [5, 10, 15, 20, 25]
+            if (ceng_shu < 30 and ceng_shu > 25):
+                label2 = [5, 10, 15, 20, 25, 30]
+            elif (ceng_shu == 30):
+                label2 = [5, 10, 15, 20, 25, 30]
+            if (ceng_shu < 35 and ceng_shu > 30):
+                label2 = [5, 10, 15, 20, 25, 30, 35]
+            elif (ceng_shu == 35):
+                label2 = [5, 10, 15, 20, 25, 30, 35]
+            if (ceng_shu < 40 and ceng_shu > 35):
+                label2 = [5, 10, 15, 20, 25, 30, 35, 40]
+            elif (ceng_shu == 40):
+                label2 = [5, 10, 15, 20, 25, 30, 35, 40]
+            if (ceng_shu < 45 and ceng_shu > 40):
+                label2 = [5, 10, 15, 20, 25, 30, 35, 40, 45]
+            elif (ceng_shu == 45):
+                label2 = [5, 10, 15, 20, 25, 30, 35, 40, 45]
+            if (ceng_shu < 50 and ceng_shu > 45):
+                label2 = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+            elif (ceng_shu == 50):
+                label2 = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+            labelY = label1 + label2
+            # 2.2 再准备构成图的数据
+            # 第一个折线图的数据
+            # x1=['2020/6/6'	,'2020/6/7'	,'2020/7/29'	,'2020/9/6',	'2020/10/9'	,'2020/11/5'	,'2020/11/24'	,'2020/12/17',	'2021/1/14',	'2021/3/9'	,'2021/3/31',	'2021/5/18',	'2021/8/18',	'2021/11/18',	'2022/2/18'	,'2022/6/10']
+            # y1=[0,0	,-1.1	,-2.1	,-3	,-3.7	,-4.1,	-4.4,	-5	,-5.8,	-6.5,	-7.1,	-7.5,	-7.7,	-7.81	,-7.81]
+            # # 第二个折线图的数据
+            # x2=['2020/6/6'	,'2020/6/7'	,'2020/7/29'	,'2020/9/6',	'2020/10/9'	,'2020/11/5'	,'2020/11/24'	,'2020/12/17',	'2021/1/14',	'2021/3/9'	,'2021/3/31',	'2021/5/18',	'2021/8/18',	'2021/11/18',	'2022/2/18'	,'2022/6/10']
+            # y2=[1,1,5,7,9,11,13,15,17,19,19,19]
+            y2 = data.iloc[58, :]
+            # 3.然后准备画布，决定图的宽、高、清晰度(20是宽，8是高，dpi是清晰度)
+            # ax.xaxis.set_major_formatter(mdate.DateFormatter('%Y-%m-%d'))
+            # 4.将构成图的数据绑定到图上，先是横坐标，然后是纵坐标，label是标记，标价显示还需要legend()
+            # 画第一个折线图
+            # pyplot.plot(x1, y1,label="第一个折线图")
+            # # 画第二个折线图,自动改变颜色！当然也可以指定两个折线图分别为什么颜色
+            pyplot.plot(date1, y2, marker='d', color='#9ACD32', label="楼层", linestyle='-')  # "荷载"+"\n"+"（层）"
+            # 显示线的标记
+            # pyplot.scatter(x1,y1,s=40,c='r',marker='.')
+            # pyplot.scatter(date1,y2,s=40,c='b',marker=',')
+            # Python matplotlib画图时图例说明(legend)放到图像外侧详解：https://www.jb51.net/article/186659.htm
+            # 5.将坐标轴刻度绑定上去，然后再标记x、y分别代表了什么;刻度和标记都为Times New Roman，且字体大小为16
+            # 5.1 绑定刻度，刻度数据可以通过一一对应显示字符串
+            # # 5.2 标记x、y代表什么
+            pyplot.title("附图" + index_futu[p] + "：" + projiect_name + loudong + "楼主体沉降监测点沉降量-时间-荷载曲线", fontsize=22,
+                         loc='left')  # ,fontproperties=font
+            ax.xaxis.set_ticks_position('top')  # 将x轴刻度设在下面的坐标轴上
+            ax.yaxis.set_ticks_position('left')  # 将y轴刻度设在左边的坐标轴上
+            ax.spines['top'].set_position(('data', 0))  # 将两个坐标轴的位置设在数据点原点
+            # ax.spines['left'].set_color('None')
+            ax.spines['bottom'].set_visible(False)
+            ax.spines['right'].set_position(('data', -1))
+            # 6.整个图的标题
+            pyplot.legend(loc='upper left', fontsize=20, bbox_to_anchor=(0.98, 1), ncol=1)
+            # pyplot.legend(prop={'family':'SimHei','size':15})
+            # pyplot.rcParams.update({'font.size':24})
+            # pyplot.legend()
+            # pyplot.legend(prop=font)
+            pyplot.xlabel("时间(天)", fontdict={'weight': 50, 'size': 25}, labelpad=-260,
+                          loc='right')  #############################################labelpad修改
+            pyplot.annotate("x标签", (5, 5), xycoords='data', xytext=(5, 5), fontsize=15)
+            pyplot.ylabel("变化量（mm）                      荷载（层）", fontdict={'weight': 'normal', 'size': 25})
+            pyplot.xticks(pd.date_range(date1[0], date1[-1], freq=freqs[p]), rotation='vertical', size=20)
+            pyplot.yticks(labelY, size=25)
+            # 7.背景换成网格，以及添加水印
+            # # 7.1 网格：ls=":"-->网格样式（虚线）,color="gray"-->网格颜色,alpha=0.5-->网格透明度
+            # # pyplot.grid(ls=":",color="gray",alpha=0.5)
+            # pyplot.grid()  # 设置网格模式
+            # # 7.2 添加水印
+            # pyplot.text(x=1,               # 水印开头左下角对应的X点
+            #  		 y=2,               # 水印开头左下角对应的Y点
+            #          s="Matplotlib",    # 水印文本
+            #          fontsize=50,       # 水印大小
+            #          color="gray",      # 水印颜色
+            #          alpha=0.5)         # 水印是通过透明度控制的
+            #
+            # pyplot.tight_layout()
+            # ax.tick_params(top=0.99,bottom=0.11,left=0.11,right=0.9)
+            # ax.tick_params(top=0,bottom=0,left=0,right=0)
+            # # 8.保存图
+            ax.set_yticklabels([str(abs(x)) for x in ax.get_yticks()])
+            pyplot.savefig("D:\\2022\\" + sheetnames[p] + "曲线图", dpi=160)  # bbox_inches='tight'
+            # 9.显示图
+            pyplot.show()
 class Zhuti_dataset(QDialog):
     def __init__(self):
         super(Zhuti_dataset,self).__init__()
@@ -352,7 +617,7 @@ class Zhuti_dataset(QDialog):
                 sheet1.cell(i - index1 + 1, 2).value = data1.loc[i, 3]
                 sheet3.cell(13, i + 4 - index1).value = data1.loc[i, 1]
                 sheet3.cell(14, i + 4 - index1).value = data1.loc[i, 3]
-                sheet3.cell(12, i + 4 - index1).value = 'Y' + num + '-' + 'CJ' + str(i - index1 + 1)
+                sheet3.cell(12, i + 4 - index1).value = num + '-' + 'CJ' + str(i - index1 + 1)
             k = 3
             if (re.findall(r'[(](.*)[)]', data1.iloc[1, 0], flags=0) == []):
                 sheet1.cell(data1.shape[0], 1).value = re.findall(r'[（](.*)[）]', data1.iloc[1, 0], flags=0)[0]
@@ -379,18 +644,18 @@ class Zhuti_dataset(QDialog):
                 sheet4.cell(3, 2).value = re.findall(r'[(](.*)[)]', data1.iloc[1, 2], flags=0)[0]
                 sheet4.cell(3, 1).value = 2
 
-            for i in range(8, data1.shape[1], 7):
-                if (re.findall(r'[(](.*)[)]', data1.iloc[1, i - 3], flags=0) == []):
-                    sheet1.cell(data1.shape[0], k).value = re.findall(r'[（](.*)[）]', data1.iloc[1, i - 3], flags=0)[0]
-                    sheet3.cell(12 + k, 2).value = re.findall(r'[（](.*)[）]', data1.iloc[1, i - 3], flags=0)[0]
+            for i in range(8, data1.shape[1], 7):  #############################改7或者8
+                if (re.findall(r'[(](.*)[)]', data1.iloc[1, i - 3], flags=0) == []):################改
+                    sheet1.cell(data1.shape[0], k).value = re.findall(r'[（](.*)[）]', data1.iloc[1, i - 3], flags=0)[0]################改
+                    sheet3.cell(12 + k, 2).value = re.findall(r'[（](.*)[）]', data1.iloc[1, i - 3], flags=0)[0]################改
                     sheet3.cell(12 + k, 1).value = k
-                    sheet4.cell(1 + k, 2).value = re.findall(r'[（](.*)[）]', data1.iloc[1, i - 3], flags=0)[0]
+                    sheet4.cell(1 + k, 2).value = re.findall(r'[（](.*)[）]', data1.iloc[1, i - 3], flags=0)[0]################改
                     sheet4.cell(1 + k, 1).value = k
                 else:
-                    sheet1.cell(data1.shape[0], k).value = re.findall(r'[(](.*)[)]', data1.iloc[1, i - 3], flags=0)[0]
-                    sheet3.cell(12 + k, 2).value = re.findall(r'[(](.*)[)]', data1.iloc[1, i - 3], flags=0)[0]
+                    sheet1.cell(data1.shape[0], k).value = re.findall(r'[(](.*)[)]', data1.iloc[1, i - 3], flags=0)[0]################改
+                    sheet3.cell(12 + k, 2).value = re.findall(r'[(](.*)[)]', data1.iloc[1, i - 3], flags=0)[0]################改
                     sheet3.cell(12 + k, 1).value = k
-                    sheet4.cell(1 + k, 2).value = re.findall(r'[(](.*)[)]', data1.iloc[1, i - 3], flags=0)[0]
+                    sheet4.cell(1 + k, 2).value = re.findall(r'[(](.*)[)]', data1.iloc[1, i - 3], flags=0)[0]################改
                     sheet4.cell(1 + k, 1).value = k
                 for j in range(index1, index2):
                     sheet1.cell(j - index1 + 1, k).value = data1.loc[j, i]
@@ -755,7 +1020,7 @@ class Jikeng_original_cj(QDialog):
         position = []
         num_1 = 0
         for i in range(df3.shape[0]):
-            if 'Y' in df3.iloc[i, 0]:
+            if 'CJ' in df3.iloc[i, 0]:    ###############################################################################已将‘Y’修改为“CJ”
                 position.append([i, i - num_1 - 1])
                 num_1 = num_1 + 1
         return position
@@ -1434,10 +1699,12 @@ class Jikeng_original_cj(QDialog):
                         sum_RB = 0
                         sum_RF = 0
                         sum_RB_cezhan = 0
+                        seconds_strat = datetime.timedelta(seconds=28800)
                         for j in range(3, nrows + 1):
                             time_round = random.randint(10, 20)
-                            sheet1.cell(j, 3).value = datetime.timedelta(
-                                seconds=28800 + (j - 3) * time_round)  # print(datetime.timedelta(seconds=28800))
+                            seconds_strat = seconds_strat + datetime.timedelta(
+                                seconds=time_round)  # print(datetime.timedelta(seconds=28800))
+                            sheet1.cell(j, 3).value = seconds_strat
                             if (sheet1.cell(j, 6).value == 'RB'):
                                 sum_RB = sum_RB + sheet1.cell(j, 7).value
                                 sum_RB_cezhan = sum_RB_cezhan + 1
@@ -1447,7 +1714,6 @@ class Jikeng_original_cj(QDialog):
                         SUM_RB.append(sum_RB)
                         SUM_RF.append(sum_RF)
                         SUM_RB_CEZHAN.append(sum_RB_cezhan)
-
             num_1 = 0
             for z1 in range(len(pat_name)):
                 path1 = path_output1 + '\\'
@@ -1904,7 +2170,7 @@ class Zhuti_original_cj(QDialog):
         position = []
         num_1 = 0
         for i in range(df3.shape[0]):
-            if 'Y' in df3.iloc[i, 0]:
+            if 'CJ' in df3.iloc[i, 0]:   ###############################################################################已将‘Y’修改为“CJ”
                 position.append([i, i - num_1 - 1])
                 num_1 = num_1 + 1
         return position
@@ -2717,10 +2983,14 @@ class Zhuti_original_cj(QDialog):
                     sum_RB = 0
                     sum_RF = 0
                     sum_RB_cezhan = 0
+                    seconds_strat=datetime.timedelta(seconds=28800)
                     for j in range(3, nrows + 1):
                         time_round=random.randint(10,20)
-                        sheet1.cell(j, 3).value = datetime.timedelta(
-                            seconds=28800 + (j - 3) * time_round)  # print(datetime.timedelta(seconds=28800))
+                        seconds_strat=seconds_strat+ datetime.timedelta(
+                            seconds=time_round)  # print(datetime.timedelta(seconds=28800))
+                        # sheet1.cell(j, 3).value = datetime.timedelta(
+                        #     seconds=28800 + (j - 3) * time_round)  # print(datetime.timedelta(seconds=28800))
+                        sheet1.cell(j,3).value=seconds_strat
                         if (sheet1.cell(j, 6).value == 'RB'):
                             sum_RB = sum_RB + sheet1.cell(j, 7).value
                             sum_RB_cezhan = sum_RB_cezhan + 1
